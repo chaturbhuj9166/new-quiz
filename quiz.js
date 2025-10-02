@@ -30,6 +30,7 @@ const questionDiv = document.querySelector(".question");
 const optionsDiv = document.querySelector(".options");
 const options = document.querySelectorAll(".option");
 const scoreSpan = document.querySelector("#score span");
+const button = document.querySelector(".button");
 
 let count = 5;
 let questionNumber = 0;
@@ -62,30 +63,41 @@ function printQuestionAndOptions() {
   options.forEach(
     (option, index) => (option.innerText = data[questionNumber].opt[index])
   );
+
   //   for (let i = 0; i < options.length; i++) {
   //     options[i].innerText = data[questionNumber].opt[i];
   //   }
 
-options.forEach((e) =>{
-  e.style.color = ""
-e.addEventListener("click",()=>{
-  if(e.innerText===data[questionNumber].a){
-    e.style.color="green"
-    console.log("YES");
-   }
-    
-  //  if (questionNumber === data.length + 1) {
-  //   e.style.color =""
-  //  } 
-   else{
-       e.style.color="red"
-     console.log("NO");
-     
-   }
-})
+  options.forEach((e) => {
+    e.style.backgroundColor = "";
+    e.style.pointerEvents = "auto";
 
-})
+    e.addEventListener("click", () => {
+      options.forEach((e) => {
+        e.style.pointerEvents = "none";
+      });
 
+      if (e.innerText === data[questionNumber].a) {
+        e.style.backgroundColor = "green";
+      } else {
+        e.style.backgroundColor = "red";
+
+        options.forEach((o) => {
+          if (o.innerText === data[questionNumber].a) {
+            o.style.backgroundColor = "green";
+          }
+        });
+      }
+    });
+  });
 }
 
+button.addEventListener("click", () => {
+  timerDiv.textContent = 5;
+  count = 5;
+  questionNumber++;
+  printQuestionAndOptions(); //PRINTS FIRST QUESTION & OPTIONS
+});
+// function resercounter() {
 
+// }
